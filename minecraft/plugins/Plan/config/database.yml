@@ -1,0 +1,8 @@
+# MySQL, MariaDB
+MySQL:
+  enabled: true
+  address: '127.0.0.1'  # Usamos 127.0.0.1 ou localhost, pois o DB está na mesma máquina
+  port: 3306
+  database: 'minecraft_db'
+  username: 'TemSaborDMeL'
+  password: 'Avo13hai@'
