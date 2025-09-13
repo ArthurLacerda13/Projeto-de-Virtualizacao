@@ -3,22 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
     <title>MineCraft Server - Status</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              "minecraft-green": "#00FF00",
-              "minecraft-dark": "#2D2D2D",
-              "minecraft-brown": "#8B4513",
-              "minecraft-stone": "#7F7F7F",
-            },
-          },
-        },
-      };
-    </script>
+    <script src="script.js"></script>
   </head>
   <body
     class="bg-gradient-to-b from-black via-purple-900 to-gray-900 min-h-screen text-white relative overflow-x-hidden"
@@ -238,7 +226,7 @@
           </div>
         </div>
       </div>
-
+      
       <!-- Top 10 Jogadores -->
       <div
         class="bg-minecraft-dark/80 backdrop-blur-sm rounded-xl border-2 border-minecraft-stone/50 p-6"
@@ -269,7 +257,6 @@
               </tr>
             </thead>
             <tbody id="players-table">
-              <!-- Os dados serão inseridos aqui via JavaScript -->
             </tbody>
           </table>
         </div>
@@ -347,233 +334,5 @@
       </div>
     </footer>
 
-    <script>
-      // Copiar IP
-      function copyIP() {
-        const ip = document.getElementById("server-ip").textContent;
-        navigator.clipboard.writeText(ip).then(() => {
-          alert("IP copiado para a área de transferência!");
-        });
-      }
-
-      // Buscar e atualizar dados
-      async function updatePageData() {
-        const lastUpdateElement = document.getElementById("last-update");
-        try {
-          const response = await fetch(
-            "http://52.15.182.80:5000/api/server-data"
-          );
-          const data = await response.json();
-
-          // Status
-          const statusIndicator = document.getElementById("status-indicator");
-          const statusText = document.getElementById("status-text");
-          const playersOnline = document.getElementById("players-online");
-          const maxPlayers = document.getElementById("max-players");
-          const serverVersion = document.getElementById("server-version");
-
-          if (data.status.online) {
-            statusIndicator.className =
-              "w-4 h-4 bg-minecraft-green rounded-full animate-pulse mr-2";
-            statusText.textContent = "ONLINE";
-            statusText.className = "text-xl font-semibold text-minecraft-green";
-            playersOnline.textContent = data.status.players_online;
-            maxPlayers.textContent = data.status.players_max;
-            serverVersion.textContent = data.status.version;
-          } else {
-            statusIndicator.className = "w-4 h-4 bg-red-500 rounded-full mr-2";
-            statusText.textContent = "OFFLINE";
-            statusText.className = "text-xl font-semibold text-red-500";
-            playersOnline.textContent = "0";
-            maxPlayers.textContent = "--";
-            serverVersion.textContent = "--";
-          }
-
-          // Top 10
-          const tableBody = document.getElementById("players-table");
-          tableBody.innerHTML = "";
-          if (data.top10_players && data.top10_players.length > 0) {
-            data.top10_players.forEach((player, index) => {
-              const row = document.createElement("tr");
-              row.className =
-                "border-b border-minecraft-stone/30 hover:bg-minecraft-stone/20 transition-colors";
-
-              const positionClass =
-                index < 3 ? "text-yellow-400" : "text-white";
-              const medal =
-                index === 0
-                  ? "🥇"
-                  : index === 1
-                  ? "🥈"
-                  : index === 2
-                  ? "🥉"
-                  : "";
-
-              const lastLoginClass =
-                player.lastLogin === "Online"
-                  ? "text-minecraft-green font-semibold"
-                  : "text-gray-400";
-
-              row.innerHTML = `
-          <td class="py-3 px-4 ${positionClass} font-bold">${medal} ${
-                index + 1
-              }º</td>
-          <td class="py-3 px-4">
-              <div class="flex items-center space-x-2">
-                  <div class="w-8 h-8 bg-minecraft-brown rounded flex items-center justify-center text-xs">👤</div>
-                  <span class="font-semibold">${player.name}</span>
-              </div>
-          </td>
-          <td class="py-3 px-4 font-mono text-minecraft-green">${
-            player.time
-          }</td>
-          <td class="py-3 px-4 text-red-400 font-semibold">${player.deaths}</td>
-          <td class="py-3 px-4 ${lastLoginClass}">${player.lastLogin}</td>
-      `;
-              tableBody.appendChild(row);
-            });
-          } else {
-            tableBody.innerHTML =
-              '<tr><td colspan="5" class="text-center py-4">Nenhum dado de jogador encontrado. Jogue um pouco para aparecer aqui!</td></tr>';
-          }
-
-          // Última atualização
-          const now = new Date();
-          lastUpdateElement.textContent = now.toLocaleString("pt-BR", {
-            timeStyle: "short",
-          });
-        } catch (error) {
-          console.error("Erro ao buscar dados do servidor:", error);
-          document.getElementById("status-text").textContent =
-            "API INDISPONÍVEL";
-        }
-      }
-
-      // Inicialização
-      document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("server-ip").textContent = "52.15.182.80:25565";
-        updatePageData();
-        setInterval(updatePageData, 30000);
-      });
-    </script>
-
-    <!-- Animações -->
-    <style>
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-10px) rotate(5deg);
-        }
-      }
-
-      @keyframes end-island-float {
-        0%,
-        100% {
-          transform: translateY(0px) translateX(0px) rotate(0deg);
-          opacity: 0.2;
-        }
-        25% {
-          transform: translateY(-8px) translateX(2px) rotate(1deg);
-          opacity: 0.25;
-        }
-        50% {
-          transform: translateY(-15px) translateX(-1px) rotate(-0.5deg);
-          opacity: 0.3;
-        }
-        75% {
-          transform: translateY(-5px) translateX(3px) rotate(0.8deg);
-          opacity: 0.22;
-        }
-      }
-
-      @keyframes enderman-float {
-        0%,
-        100% {
-          transform: translateY(0px) scaleY(1);
-          opacity: 0.4;
-        }
-        50% {
-          transform: translateY(-20px) scaleY(1.05);
-          opacity: 0.6;
-        }
-      }
-
-      @keyframes chorus-plant-float {
-        0%,
-        100% {
-          transform: translateY(0px) rotate(0deg) scale(1);
-          opacity: 0.25;
-        }
-        33% {
-          transform: translateY(-5px) rotate(2deg) scale(1.1);
-          opacity: 0.35;
-        }
-        66% {
-          transform: translateY(-8px) rotate(-1deg) scale(1.05);
-          opacity: 0.3;
-        }
-      }
-
-      @keyframes end-particle {
-        0% {
-          transform: translateY(0px) translateX(0px) scale(1);
-          opacity: 0.6;
-        }
-        25% {
-          transform: translateY(-10px) translateX(5px) scale(1.2);
-          opacity: 0.8;
-        }
-        50% {
-          transform: translateY(-20px) translateX(-3px) scale(0.8);
-          opacity: 0.4;
-        }
-        75% {
-          transform: translateY(-15px) translateX(8px) scale(1.1);
-          opacity: 0.7;
-        }
-        100% {
-          transform: translateY(-30px) translateX(0px) scale(0.5);
-          opacity: 0;
-        }
-      }
-
-      .minecraft-block {
-        animation: float 6s ease-in-out infinite;
-      }
-
-      .end-island-float {
-        animation: end-island-float 12s ease-in-out infinite;
-      }
-
-      .enderman-float {
-        animation: enderman-float 8s ease-in-out infinite;
-      }
-
-      .chorus-plant-float {
-        animation: chorus-plant-float 10s ease-in-out infinite;
-      }
-
-      .end-particle {
-        animation: end-particle 6s ease-in-out infinite;
-      }
-
-      /* Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: rgba(45, 45, 45, 0.5);
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #00ff00;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #00cc00;
-      }
-    </style>
   </body>
 </html>

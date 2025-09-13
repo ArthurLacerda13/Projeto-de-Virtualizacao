@@ -1,0 +1,117 @@
+        /* Animações */
+
+    @keyframes float {
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+    }
+
+    @keyframes end-island-float {
+    0%,
+    100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+        opacity: 0.2;
+    }
+    25% {
+        transform: translateY(-8px) translateX(2px) rotate(1deg);
+        opacity: 0.25;
+    }
+    50% {
+        transform: translateY(-15px) translateX(-1px) rotate(-0.5deg);
+        opacity: 0.3;
+    }
+    75% {
+        transform: translateY(-5px) translateX(3px) rotate(0.8deg);
+        opacity: 0.22;
+    }
+    }
+
+    @keyframes enderman-float {
+    0%,
+    100% {
+        transform: translateY(0px) scaleY(1);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translateY(-20px) scaleY(1.05);
+        opacity: 0.6;
+    }
+    }
+
+    @keyframes chorus-plant-float {
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg) scale(1);
+        opacity: 0.25;
+    }
+    33% {
+        transform: translateY(-5px) rotate(2deg) scale(1.1);
+        opacity: 0.35;
+    }
+    66% {
+        transform: translateY(-8px) rotate(-1deg) scale(1.05);
+        opacity: 0.3;
+    }
+    }
+
+    @keyframes end-particle {
+    0% {
+        transform: translateY(0px) translateX(0px) scale(1);
+        opacity: 0.6;
+    }
+    25% {
+        transform: translateY(-10px) translateX(5px) scale(1.2);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-20px) translateX(-3px) scale(0.8);
+        opacity: 0.4;
+    }
+    75% {
+        transform: translateY(-15px) translateX(8px) scale(1.1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-30px) translateX(0px) scale(0.5);
+        opacity: 0;
+    }
+    }
+
+    .minecraft-block {
+    animation: float 6s ease-in-out infinite;
+    }
+
+    .end-island-float {
+    animation: end-island-float 12s ease-in-out infinite;
+    }
+
+    .enderman-float {
+    animation: enderman-float 8s ease-in-out infinite;
+    }
+
+    .chorus-plant-float {
+    animation: chorus-plant-float 10s ease-in-out infinite;
+    }
+
+    .end-particle {
+    animation: end-particle 6s ease-in-out infinite;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+    width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+    background: rgba(45, 45, 45, 0.5);
+    }
+    ::-webkit-scrollbar-thumb {
+    background: #00ff00;
+    border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+    background: #00cc00;
+    }
