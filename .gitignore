@@ -1,3 +1,9 @@
 minecraft_backups/
 minecraft_backups/
 minecraft/
+
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
